@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Проверка загрузки изображений через CDN">
+    <title>Загрузка изображений через CDN</title>
+</head>
+<body>
+    <h1>Проверка загрузки изображений через CDN</h1>
+    {% if old_cdn == new_cdn %}
+    <h2>CDN: {{old_cdn}}</h2>
+    {% else %} 
+    <h2>Старый CDN: {{old_cdn}}, новый CDN {{new_cdn}}</h2>
+    {% endif %}
+    {% if bad_list %}
+        <table>
+            <tr><th>URL</th><th>Код ошибки</th></tr>
+            {% for link, code in bad_list%}
+            <tr><td><a href="{{link}}">{{link}}</a></td><td>{{code}}</td></tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <div>{{conclusion}}</div>
+    <div><a href = "{% url 'index' %}">Назад</a></div>
+</body>
+</html>

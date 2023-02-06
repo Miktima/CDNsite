@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Получение метрик трафика через API">
+    <title>Метрики трафика CDNNOW</title>
+</head>
+<body>
+    <h1>Получение метрик трафика через API</h1>
+    {% if messages %}
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <form action="results.html" method="post">
+        {% csrf_token %}
+        <div>
+            {% if project_list %}
+            <span>Выберите проект: </span>
+            <select name="project">
+                <option value="no_select">---------Выберите проект---------</option>
+                {% for project in project_list %}<option value="{{project.name}}">{{project.origin}}</option>{% endfor %}
+            </select>
+            {% else %}
+            <span>Не заполнен список проектов</span>
+            {% endif %}
+        </div>
+        <div>
+            <span>Период*: с</span>
+            <select name="from_year">
+                {% for year in years %}<option value="{{year}}"{%if year == current_year %} selected{% endif %}>{{year}}</option>{% endfor %}
+            </select>
+            <select name="from_month">
+                {% for month in months %}<option value="{{month}}"{%if month == current_month %} selected{% endif %}>{{month}}</option>{% endfor %}
+            </select>
+            <select name="from_day">
+                {% for day in days %}<option value="{{day}}"{%if day == current_day %} selected{% endif %}>{{day}}</option>{% endfor %}
+            </select>
+            <span> по </span>
+            <select name="to_year">
+                {% for year in years %}<option value="{{year}}"{%if year == current_year %} selected{% endif %}>{{year}}</option>{% endfor %}
+            </select>
+            <select name="to_month">
+                {% for month in months %}<option value="{{month}}"{%if month == current_month %} selected{% endif %}>{{month}}</option>{% endfor %}
+            </select>
+            <select name="to_day">
+                {% for day in days %}<option value="{{day}}"{%if day == current_day %} selected{% endif %}>{{day}}</option>{% endfor %}
+            </select>
+            <div>* - Разбиение периода происходит автоматически в зависимости от его длительности</div>
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

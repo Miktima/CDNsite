@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Получение статистики трафика через API">
+    <title>Статистика трафика CDNNOW</title>
+</head>
+<body>
+    <h1>Получение статистики трафика через API</h1>
+    <h2>{{portal}}</h2>
+    <h3>{{period}}</h3>
+    {% if plot %}
+        <img src="data:image/png;base64,{{plot}}" />
+    {% else %}
+        <div> Нет данных</div>
+    {% endif %}
+    <div><a href = "{% url 'index' %}">Назад</a></div>
+</body>
+</html>

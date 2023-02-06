@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Получение метрик трафика через API">
+    <title>Метрики трафика CDNNOW</title>
+</head>
+<body>
+    <h1>Получение метрик трафика через API</h1>
+    <h2>{{origin}}</h2>
+    <h3>{{from_date}} - {{to_date}}</h3>
+    {% if plot_edge_cash %}
+        <div><img src="data:image/png;base64,{{plot_edge_cash}}" /></div>
+        <div><img src="data:image/png;base64,{{plot_edge_requests}}" /></div>
+        <div><img src="data:image/png;base64,{{plot_origin_requests}}" /></div>
+        <div><img src="data:image/png;base64,{{plot_ratio_requests}}" /></div>
+    {% else %}
+        <div> Нет данных</div>
+    {% endif %}
+    <div><a href = "{% url 'index' %}">Назад</a></div>
+</body>
+</html>

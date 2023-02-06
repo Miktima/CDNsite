@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Проверка загрузки изображений через CDN">
+    <title>Загрузка изображений через CDN</title>
+</head>
+<body>
+    <h1>Проверка загрузки изображений через CDN</h1>
+    {% if messages %}
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <form action="results.html" method="post">
+        {% csrf_token %}
+        <table>{{form}}</table>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
