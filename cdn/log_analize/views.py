@@ -48,8 +48,8 @@ def results(request):
                 "request_uri_links": request_uri_links,
                 "request_uri_calues": request_uri_values,
                 "http_user_agent_plot": http_user_agent_pic,
-                "request_uri_links": http_user_agent_links,
-                "request_uri_calues": http_user_agent_values,
+                "http_user_agent_links": http_user_agent_links,
+                "http_user_agent_calues": http_user_agent_values,
             }
             return render(request, "log_analize/results.html", context)
         else:
