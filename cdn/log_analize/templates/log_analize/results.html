@@ -27,7 +27,7 @@
             <tr><td>{{forloop.counter0}}</td><td>{{agent}}</td><td>{{value}}</td></tr>
             {% endfor %}
         </table>
-        <div><img src="data:image/png;base64,{{request_uri_plot}}" /></div>
+        <div><img src="data:image/png;base64,{{http_user_agent_plot}}" /></div>
     {% else %}
         <div> Нет данных по http_user_agent</div>
     {% endif %}
