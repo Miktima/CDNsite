@@ -13,7 +13,7 @@
         <table>
             <tr><th>Номер</th><th>Request URI</th><th>Количество</th></tr>
             {% for uri, value in request_uri_links.items %}
-            <tr><td>{{forloop.counter0}}</td><td>{{uri}}</td><td>{{value}}</td></tr>
+            <tr><td>{{forloop.counter}}</td><td>{{uri}}</td><td>{{value}}</td></tr>
             {% endfor %}
         </table>
         <div><img src="data:image/png;base64,{{request_uri_plot}}" /></div>
@@ -28,6 +28,17 @@
             {% endfor %}
         </table>
         <div><img src="data:image/png;base64,{{http_user_agent_plot}}" /></div>
+    {% else %}
+        <div> Нет данных по http_user_agent</div>
+    {% endif %}
+    {% if http_referer_plot %}
+        <table>
+            <tr><th>Номер</th><th>HTTP Referer</th><th>Количество</th></tr>
+            {% for referer, value in http_referer_links.items %}
+            <tr><td>{{forloop.counter0}}</td><td>{{referer}}</td><td>{{value}}</td></tr>
+            {% endfor %}
+        </table>
+        <div><img src="data:image/png;base64,{{http_referer_plot}}" /></div>
     {% else %}
         <div> Нет данных по http_user_agent</div>
     {% endif %}
