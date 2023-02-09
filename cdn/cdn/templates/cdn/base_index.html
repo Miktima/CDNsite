@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="{% block description_contetnt %}Утилиты API CDNNOW{% endblock %}">
+    <link href="{% static 'cdn/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="icon" href="{% static 'cdn/img/favicon.png' %}" type="image/png">
+    <title>{% block title %}Утилиты API CDNNOW{% endblock %}</title>
+</head>
+<body class="bg-light">
+    <div class="container"><main><div class="py-5 text-center">
+        <h1>{% block h1 %}Утилиты API CDNNOW{% endblock %}</h1>
+        {% if messages %}
+        {% for message in messages %}
+        <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% block form_content %}
+        <div>Утилиты API CDNNOW</div>
+        {% endblock %}
+    </div></main></div>
+</body>
+</html>

@@ -14,3 +14,6 @@ cdn/test_images/__pycache__/
 cdn/test_images/migrations/
 cdn/traffic_metric/__pycache__/
 cdn/traffic_metric/migrations/
+cdn/cdn/static/cdn/bootstrap.min.css
+cdn/cdn/settings.py
+
