@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from . import views
 
 urlpatterns = [
     path('stat_cdnnow/', include('stat_cdnnow.urls')),
@@ -22,5 +23,6 @@ urlpatterns = [
     path('test_images/', include('test_images.urls')),
     path('test_cash/', include('test_cash.urls')),
     path('log_analize/', include('log_analize.urls')),
+    path('', views.index, name='main'),
     path('admin/', admin.site.urls),
 ]
