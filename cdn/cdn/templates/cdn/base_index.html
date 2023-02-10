@@ -7,20 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{% block description_contetnt %}Утилиты API CDNNOW{% endblock %}">
     <link href="{% static 'cdn/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'cdn/cdn.css' %}" rel="stylesheet">
     <link rel="icon" href="{% static 'cdn/img/favicon.png' %}" type="image/png">
     <title>{% block title %}Утилиты API CDNNOW{% endblock %}</title>
 </head>
 <body class="bg-light">
-    <div class="container"><main><div class="py-5 text-center">
+    <div class="container py-5 text-center"><div class="w-75">
         <h1>{% block h1 %}Утилиты API CDNNOW{% endblock %}</h1>
-        {% if messages %}
-        {% for message in messages %}
-        <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-        {% endfor %}
-        {% endif %}
+        <div class="py-3">
+            {% if messages %}
+            {% for message in messages %}
+            <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
         {% block form_content %}
-        <div>Утилиты API CDNNOW</div>
+        <div class="py-3">Утилиты API CDNNOW</div>
         {% endblock %}
-    </div></main></div>
+        {% block back %}{% endblock %}
+    </div></div>
 </body>
 </html>

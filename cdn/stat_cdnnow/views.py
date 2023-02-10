@@ -45,7 +45,7 @@ def results(request):
     except Portals_stat.DoesNotExist:
         # Redisplay the form.
         messages.error(request, 'Необходимо выбрать портал')
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('stat_index'))
     else:
         objStat = Statsite()
         year_stat = int(request.POST['year'])

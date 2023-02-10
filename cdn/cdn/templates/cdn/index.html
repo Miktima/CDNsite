@@ -4,11 +4,11 @@
 {% block h1 %}Утилиты для работы с CDNNOW{% endblock %}
 {% block form_content %}
 {% if applications %}
-<div class="text-start card p-2"><ul>
+<div class="text-start list-group p-2">
     {% for key, value in applications.items %}
-    <li><a href="{{key}}">{{value}}</a></li>
+    <a href="{{key}}" class="list-group-item list-group-item-action">{{value}}</a></li>
     {% endfor %}
-</ul></div>
+</div>
 {% else %}
 <div>Утилит не обнаружено</div>
 {% endif %}
