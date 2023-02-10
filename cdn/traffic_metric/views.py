@@ -47,19 +47,19 @@ def results(request):
     except Projects.DoesNotExist:
         # Redisplay the form.
         messages.error(request, 'Необходимо выбрать проект')
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('metric_index'))
     else:
         from_date = date(int(request.POST['from_year']), int(request.POST['from_month']), int(request.POST['from_day']))
         to_date = date(int(request.POST['to_year']), int(request.POST['to_month']), int(request.POST['to_day']))
         if from_date > to_date:
             messages.error(request, 'Дата начала периода должна быть меньше даты окончания')
-            return HttpResponseRedirect(reverse('index'))        
+            return HttpResponseRedirect(reverse('metricindex'))        
         objTraffic = Trafficsite()
         if objTraffic.get_traffic_metric(project, from_date, to_date) != False:
             result = objTraffic.get_traffic_metric(project, from_date, to_date)
         else:
             messages.error(request, objTraffic.error)
-            return HttpResponseRedirect(reverse('index'))        
+            return HttpResponseRedirect(reverse('metric_index'))        
         result_frame = pd.read_json(json.dumps(result), "records")
         locator = mdates.AutoDateLocator(minticks=5, maxticks=9)
         formatter = mdates.ConciseDateFormatter(locator)

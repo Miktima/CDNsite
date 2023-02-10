@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Проверка кеширования контента в CDN">
-    <title>Кеширование контента в CDN</title>
-</head>
-<body>
-    <h1>Проверка кеширования контента в CDN</h1>
+{% extends "cdn/base_results.html" %}
+{% block description_contetnt %}Проверка кеширования контента в CDN{% endblock %}
+{% block title %}Кеширование контента в CDN{% endblock %}
+{% block h1 %}Проверка кеширования контента в CDN{% endblock %}
+{% block subheader %}
     <h2>{{portal}}</h2>
+{% endblock %}
+{% block content %}
     {% if results %}
-        <table>
-            <tr><th>URL</th><th>Код</th></tr>
-            {% for link, code in results%}
+    <table class="table table-striped text-start">
+        <tr><th>URL</th><th>Код</th></tr>
+        {% for link, code in results%}
             <tr><td><a href="{{link}}">{{link}}</a></td><td>{{code}}</td></tr>
-            {% endfor %}
-        </table>
+        {% endfor %}
+    </table>
     {% else %}
     <div>Результата нет</div>
     {% endif %}
-    <div><a href = "{% url 'index' %}">Назад</a></div>
-</body>
-</html>
+{% endblock %}
+{% block back_url %}{% url 'cash_index' %}{% endblock %}

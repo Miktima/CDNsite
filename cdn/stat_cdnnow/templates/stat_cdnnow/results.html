@@ -8,8 +8,9 @@
 {% endblock %}
 {% block content %}
     {% if plot %}
-    <img src="data:image/png;base64,{{plot}}" />
+    <div class="p-3"><img src="data:image/png;base64,{{plot}}" /></div>
     {% else %}
     <div> Нет данных</div>
     {% endif %}
 {% endblock %}
+{% block back_url %}{% url 'stat_index' %}{% endblock %}

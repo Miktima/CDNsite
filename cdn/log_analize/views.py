@@ -19,6 +19,7 @@ def results(request):
     if request.method == 'POST':
         form = LogForm(request.POST, request.FILES)
         if form.is_valid():
+            filename = (request.FILES['file']).name
             log_table = pd.read_csv(request.FILES['file'], ";")
             x=[]
             xticks = []
@@ -78,6 +79,7 @@ def results(request):
                 "http_referer_plot": http_referer_pic,
                 "http_referer_links": http_referer_links,
                 "http_referer_values": http_referer_values,
+                "filename": filename
             }
             return render(request, "log_analize/results.html", context)
         else:
