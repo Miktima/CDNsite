@@ -74,6 +74,10 @@ def results(request):
             error404_ser = (error404.value_counts()).head(20)
             error404_links = error404_ser.to_dict()
             error404_values = error404_ser.tolist()
+            # Если размер списка меньше 20, дополняем нулями
+            if error404_ser.size < 20:
+                for i in range(error404_ser.size, 20):
+                    error404_values.append(0)                   
             fig, ax = plt.subplots(figsize=(7, 7))
             ax.bar(x, error404_values, width=1, edgecolor="white", linewidth=0.7, align='edge')
             ax.set(xlim=(1, 20), xticks=xticks)
@@ -81,7 +85,7 @@ def results(request):
             ax.set_title("request_uri - error 404") 
             error404_img = BytesIO()
             plt.savefig(error404_img, format="png")
-            error404_pic = base64.b64encode(request_uri_img.getvalue()).decode()
+            error404_pic = base64.b64encode(error404_img.getvalue()).decode()
             plt.clf()
             context = {
                 "request_uri_plot": request_uri_pic,
@@ -96,7 +100,7 @@ def results(request):
                 "error404_plot": error404_pic,
                 "error404_links": error404_links,
                 "error404_values": error404_values,
-                "filename": filename
+                "filename": filename,
             }
             return render(request, "log_analize/results.html", context)
         else:
