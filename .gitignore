@@ -1,19 +1,8 @@
-cdn/db.sqlite3
-cdn/manage.py
-cdn/cdn/__init__.py
-cdn/cdn/asgi.py
-cdn/cdn/wsgi.py
 cdn/cdn/__pycache__/
 cdn/log_analize/__pycache__/
 cdn/stat_cdnnow/__pycache__/
 cdn/test_cash/__pycache__/
-cdn/log_analize/migrations/
-cdn/stat_cdnnow/migrations/
-cdn/test_cash/migrations/
 cdn/test_images/__pycache__/
-cdn/test_images/migrations/
 cdn/traffic_metric/__pycache__/
-cdn/traffic_metric/migrations/
-cdn/cdn/static/cdn/bootstrap.min.css
-cdn/cdn/settings.py
+
 

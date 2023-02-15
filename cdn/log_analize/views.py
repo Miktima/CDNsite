@@ -56,7 +56,7 @@ def results(request):
             plt.savefig(http_user_agent_img, format="png")
             http_user_agent_pic = base64.b64encode(http_user_agent_img.getvalue()).decode()
             plt.clf()
-            # http_referer
+            # http_referer chart
             http_referer_ser = (log_table["http_referer"].value_counts()).head(20)
             http_referer_links = http_referer_ser.to_dict()
             http_referer_values = http_referer_ser.tolist()
@@ -69,6 +69,20 @@ def results(request):
             plt.savefig(http_referer_img, format="png")
             http_referer_pic = base64.b64encode(http_referer_img.getvalue()).decode()
             plt.clf()
+            # request_uri with 404 error 
+            error404 = log_table.loc[log_table["status"] == 404, "request_uri"]
+            error404_ser = (error404.value_counts()).head(20)
+            error404_links = error404_ser.to_dict()
+            error404_values = error404_ser.tolist()
+            fig, ax = plt.subplots(figsize=(7, 7))
+            ax.bar(x, error404_values, width=1, edgecolor="white", linewidth=0.7, align='edge')
+            ax.set(xlim=(1, 20), xticks=xticks)
+            ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+            ax.set_title("request_uri - error 404") 
+            error404_img = BytesIO()
+            plt.savefig(error404_img, format="png")
+            error404_pic = base64.b64encode(request_uri_img.getvalue()).decode()
+            plt.clf()
             context = {
                 "request_uri_plot": request_uri_pic,
                 "request_uri_links": request_uri_links,
@@ -79,6 +93,9 @@ def results(request):
                 "http_referer_plot": http_referer_pic,
                 "http_referer_links": http_referer_links,
                 "http_referer_values": http_referer_values,
+                "error404_plot": error404_pic,
+                "error404_links": error404_links,
+                "error404_values": error404_values,
                 "filename": filename
             }
             return render(request, "log_analize/results.html", context)
