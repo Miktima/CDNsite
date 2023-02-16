@@ -8,7 +8,7 @@ class Statsite:
         settings = Stat_settings.objects.first()
         self.login = settings.login
         self.password = settings.password
-        self.id_client = settings.cliend_id
+        self.id_client = settings.client_id
         self.cdnnow_urlauth = settings.url_auth
         self.cdnnow_urlstat = settings.url_stat
         

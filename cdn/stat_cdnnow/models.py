@@ -10,5 +10,7 @@ class Stat_settings (models.Model):
 class Portals_stat (models.Model):
     portal = models.CharField(max_length=200)
     id_portal = models.CharField(max_length=200)
+    project = models.CharField(max_length=200)
+    origin = models.CharField(max_length=200)
     def __str__(self) -> str:
         return self.portal

@@ -9,12 +9,12 @@
         <tr>
             {% if project_list %}
             <th>
-                <label class="form-label">Проект: </label>
+                <label class="form-label">Портал: </label>
             </th>
             <td>
                 <select name="project" class="form-select">
-                    <option value="no_select">---------Выберите проект---------</option>
-                    {% for project in project_list %}<option value="{{project.name}}">{{project.origin}}</option>{% endfor %}
+                    <option value="no_select">---------Выберите портал---------</option>
+                    {% for project in project_list %}<option value="{{project.project}}">{{project.portal}}</option>{% endfor %}
                 </select>
             </td>
             {% else %}
@@ -24,7 +24,6 @@
         <tr>
             <th>
                 <label class="form-label">Период*:</label>
-                <div style="width: 18rem;" class="text=wrap h6 small">* - Разбиение периода происходит автоматически в зависимости от его длительности</div>
             </th>
             <td>
                 <div class="input-group">
@@ -37,7 +36,7 @@
                     <select name="from_day" class="form-select">
                         {% for day in days %}<option value="{{day}}"{%if day == current_day %} selected{% endif %}>{{day}}</option>{% endfor %}
                     </select>
-                    <span> - </span>
+                    <span class="mx-3"> - </span>
                     <select name="to_year" class="form-select">
                         {% for year in years %}<option value="{{year}}"{%if year == current_year %} selected{% endif %}>{{year}}</option>{% endfor %}
                     </select>
@@ -57,3 +56,14 @@
 {% block back %}
 <div class="text-start pt-5"><a href = "{% url 'main' %}" class="btn btn-info text-white">К списку утилит</a></div>
 {% endblock %}
+{% block description %}
+Для получения метрик трафика портала необходимо указать портал и период. (*) Разбиение периода происходит автоматически в зависимости от его длительности с учетом 
+максимально возможного разбиения в 1440 точек (ограничение API CDNNOW). Выводятся следующие графики:
+<ul>
+    <li>edge_cache_status_hit_ratio - доля успешного возврата контента из кеша CDN, по отношению ко всем запросам (эфективность работы CDN)</li>
+    <li>edge_requests_count - количество запросов на сервера CDN, edge_status_4xx - из них количество запросов, завершаемых ошибками 4хх</li>
+    <li>origin_requests_count - количество запросов на сервер Origin, origin_status_4xx - из них количество запросов, завершаемых ошибками 4хх</li>
+    <li>Отношение edge_requests_count к origin_requests_count, и edge_status_4xx к origin_status_4xx</li>
+</ul>  
+{% endblock %}
+

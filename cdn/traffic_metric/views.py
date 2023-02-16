@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Projects
+from stat_cdnnow.models import Portals_stat
 from datetime import date
 from .Traffic import Trafficsite
 import pandas as pd
@@ -17,7 +17,9 @@ from matplotlib import pyplot as plt
 import matplotlib.dates as mdates
 
 def index(request):
-    project_list = Projects.objects.all()
+    # Заполняем список проектов (порталов), для работы с API использется имя портала
+    project_list = Portals_stat.objects.all()
+    # Заполняем списки для дат
     years = [2021, 2022, 2023]
     months = []
     for i in range (1, 13):
@@ -43,37 +45,44 @@ def index(request):
 def results(request):
     project = request.POST['project']
     try:
-        project_obj = Projects.objects.get(name=project)
-    except Projects.DoesNotExist:
-        # Redisplay the form.
+        project_obj = Portals_stat.objects.get(project=project)
+    except Portals_stat.DoesNotExist:
+        # Если проект проект не выбран, то возвращаемся к форме 
         messages.error(request, 'Необходимо выбрать проект')
         return HttpResponseRedirect(reverse('metric_index'))
     else:
+        # Формируем начальную и конечную дату получения метрик
+        # Для начальной даты время идет с 0 часов, для конечной даты время устанавливается 23-59
         from_date = date(int(request.POST['from_year']), int(request.POST['from_month']), int(request.POST['from_day']))
         to_date = date(int(request.POST['to_year']), int(request.POST['to_month']), int(request.POST['to_day']))
+        # Проверка, что начальная дата должна быть меньше конечной
         if from_date > to_date:
             messages.error(request, 'Дата начала периода должна быть меньше даты окончания')
-            return HttpResponseRedirect(reverse('metricindex'))        
+            return HttpResponseRedirect(reverse('metric_index'))        
         objTraffic = Trafficsite()
+        # Получение метрик или вывод ошибки в первоначальную форму
         if objTraffic.get_traffic_metric(project, from_date, to_date) != False:
             result = objTraffic.get_traffic_metric(project, from_date, to_date)
         else:
             messages.error(request, objTraffic.error)
-            return HttpResponseRedirect(reverse('metric_index'))        
+            return HttpResponseRedirect(reverse('metric_index'))
+        # Заводим полученный результат в массив pandas 
         result_frame = pd.read_json(json.dumps(result), "records")
+        # Определение тиков для оси ординат (дат)
         locator = mdates.AutoDateLocator(minticks=5, maxticks=9)
         formatter = mdates.ConciseDateFormatter(locator)
-        # 1 plot
+        # 1 plot - edge_cache_status_hit_ratio
         fig, ax = plt.subplots(figsize=(7, 7), layout='constrained')
         ax.xaxis.set_major_locator(locator)
         ax.xaxis.set_major_formatter(formatter)
         ax.plot(result_frame["timestamp"], result_frame["edge_cache_status_hit_ratio"])
         ax.set_title("Edge cache status hit ratio") 
+        # Сохранение рисунка в памяти
         img1_in_memory = BytesIO()
         plt.savefig(img1_in_memory, format="png")
         edge_cache = base64.b64encode(img1_in_memory.getvalue()).decode()
         plt.clf()
-        # 2 plot
+        # 2 plot - edge_requests_count и edge_status_4xx
         fig, ax = plt.subplots(figsize=(7, 7), layout='constrained')
         ax.xaxis.set_major_locator(locator)
         ax.xaxis.set_major_formatter(formatter)
@@ -85,7 +94,7 @@ def results(request):
         plt.savefig(img2_in_memory, format="png")
         edge_requests = base64.b64encode(img2_in_memory.getvalue()).decode()
         plt.clf()
-        # 3 plot
+        # 3 plot - origin_requests_count - origin_status_4xx
         fig, ax = plt.subplots(figsize=(7, 7), layout='constrained')
         ax.xaxis.set_major_locator(locator)
         ax.xaxis.set_major_formatter(formatter)
@@ -97,7 +106,7 @@ def results(request):
         plt.savefig(img3_in_memory, format="png")
         origin_requests = base64.b64encode(img3_in_memory.getvalue()).decode()
         plt.clf()
-        # 4 plot
+        # 4 plot - отношение edge к origin
         result_frame["ratio_requests_count"] = result_frame["edge_requests_count"] / result_frame["origin_requests_count"]
         result_frame["ratio_status_4xx"] = result_frame["edge_status_4xx"] / result_frame["origin_status_4xx"]
         fig, ax = plt.subplots(figsize=(7, 7), layout='constrained')

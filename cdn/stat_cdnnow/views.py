@@ -15,7 +15,9 @@ from matplotlib import pyplot as plt
 
 
 def index(request):
+    # Выбираем список порталов
     portal_list = Portals_stat.objects.all()
+    # Заполняем списки для выбора даты
     years = [2021, 2022, 2023]
     months = []
     for i in range (1, 13):
@@ -43,11 +45,12 @@ def results(request):
     try:
         portal_obj = Portals_stat.objects.get(id_portal=portal_id)
     except Portals_stat.DoesNotExist:
-        # Redisplay the form.
+        # Если портал не выбран или не найден, повторяем вывод формы
         messages.error(request, 'Необходимо выбрать портал')
         return HttpResponseRedirect(reverse('stat_index'))
     else:
         objStat = Statsite()
+        # Статистика собирается за указанный день, или за месяц, если день не указан
         year_stat = int(request.POST['year'])
         month_stat = int(request.POST['month'])
         if request.POST['day'] == "no":
@@ -57,7 +60,9 @@ def results(request):
         stat_period = [year_stat, month_stat, day_stat]
         if objStat.get_token() != False:
             token = objStat.get_token()
+            # Если токен получен, отправляем запрос
             response = objStat.get_stat(token, request.POST['portal'], stat_period)
+            # Если ответ положительный готовим данные для вывода на график
             if response != False:
                 plot_y = []
                 plot_x = []
@@ -72,10 +77,12 @@ def results(request):
                 else:
                     plt.xlabel('Hours')
                 plt.autoscale()
+                # График сохраняем в памяти и передаем в шаблон
                 img_in_memory = BytesIO()
                 plt.savefig(img_in_memory, format="png")
                 data_plot = base64.b64encode(img_in_memory.getvalue()).decode()
                 plt.clf()
+        # Форматирование вывода периода для шаблона
         if day_stat == "":
             period = str(month_stat) + "/" + str(year_stat)
         else:

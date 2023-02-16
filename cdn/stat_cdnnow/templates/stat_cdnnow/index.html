@@ -24,7 +24,6 @@
         <tr>
             <th>
                 <label class="form-label">Период*:</label>
-                <div style="width: 18rem;" class="text=wrap h6 small">* - Статистика собирается за указанный день, или за месяц, если день не указан</div>
             </th>
             <td>
                 <div class="input-group">
@@ -47,3 +46,7 @@
 {% block back %}
 <div class="text-start pt-5"><a href = "{% url 'main' %}" class="btn btn-info text-white">К списку утилит</a></div>
 {% endblock %}
+{% block description %}
+Для получения статистики трафика (переданный объем трафика CDN) необходимо выбрать портал и период. (*) Статистика собирается за указанный день, или за месяц, если день не указан
+{% endblock %}
+
