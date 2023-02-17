@@ -13,11 +13,11 @@ class TestCashSite:
         self.cdnnow_url_status = settings.url_status
         self.cdnnow_url_request = settings.url_request
         self.error = ""
+        # получаем идентификатор для домена - домен должен быть в базе данных
         try:
             portal_obj = Portals_stat.objects.get(portal=portal)
         except Portals_stat.DoesNotExist:
             self.error = 'Идентификатор для домена ' + portal + ' не найден'
-            return False
         else:
             self.id_portal = portal_obj.id_portal
 

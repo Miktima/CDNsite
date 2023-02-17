@@ -12,5 +12,6 @@ class Portals_stat (models.Model):
     id_portal = models.CharField(max_length=200)
     project = models.CharField(max_length=200)
     origin = models.CharField(max_length=200)
+    old_project = models.BooleanField()
     def __str__(self) -> str:
         return self.portal

@@ -16,5 +16,11 @@
     {% else %}
     <div>Результата нет</div>
     {% endif %}
+    {% for d in debug %}
+    <div>{{d}}</div>
+    {% endfor %}
+    {% for d2 in debug2 %}
+    <div>{{d2}}</div>
+    {% endfor %}
 {% endblock %}
 {% block back_url %}{% url 'cash_index' %}{% endblock %}

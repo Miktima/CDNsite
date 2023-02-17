@@ -54,17 +54,27 @@ def results(request):
             elif lenlist > 10:
                 random.seed()
                 i = 0
+                # Чтобы ссылки не повторялись, запоминаем выбранные номера в новом списке
                 choose_list = []
+                # Должно быть 10 ссылок
                 while i < 10:
+                    # Определяем переменную для цикла
                     new_n = True
+                    # Делаем цикл пока не нашли новый номер 
                     while new_n:
                         n = random.randrange(0, lenlist)
+                        # Если такой номер раньше не выбирался и ссылка не заканчивается на слеш
                         if choose_list.count(n) == 0 and (links_list[n]).endswith("/") == False:
+                            # Добавляем в спиок новый номер
                             choose_list.append(n)
+                            # добавляем единицу и выходим из цикла поиска новой ссылки
                             i += 1
                             new_n = False
+                # Заполняем ссылки для тестирования, используя список выбранных номеров
                 for k in range(0, 10):
                     links.append(links_list[choose_list[k]])
+            # При инициализации класса создаются переменные для запроса, включая идентификатор домена в CDN
+            # Если идентификатор не найден, возвращаемся на страницу запроса
             if TestCashSite(domain) != False:
                 objTest = TestCashSite(domain)
             else:
@@ -81,13 +91,16 @@ def results(request):
                     time.sleep(1)
                     i += 1
                     if i == 9:
-                        messages.error(request, "Невозможно получить положительный статус")
+                        # Если невозможно получить положительный статус, рекомендуется проверить статус на сайте CDNNOW
+                        messages.error(request, "Невозможно получить положительный статус. Проверьте статус на CDNNOW")
                         form = CashForm()
                         return render(request, "test_cash/index.html", {'form': form})
+                # Проверяем статус запроса каждые 5 секунд
                 if objTest.test_link(token, links):
                     time.sleep(5)
                     while objTest.check_test_status(token) != "passed":
                         time.sleep(5)
+                    # Получаем результат
                     results = objTest.get_test_result(token)
                     results_list = []
                     for key, values in results.items():
@@ -104,7 +117,7 @@ def results(request):
                 return render(request, "test_cash/index.html", {'form': form})
         context = {
             "portal": domain,
-            "results": results_list
+            "results": results_list,
         }
         return render(request, "test_cash/results.html", context)
     else:

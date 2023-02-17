@@ -14,7 +14,12 @@
             <td>
                 <select name="project" class="form-select">
                     <option value="no_select">---------Выберите портал---------</option>
-                    {% for project in project_list %}<option value="{{project.project}}">{{project.portal}}</option>{% endfor %}
+                    {% for project in project_list %}
+                        <option value="{{project.project}}">
+                            {{project.portal}}
+                            {% if project.old_project %} (old){% endif %}
+                        </option>
+                    {% endfor %}
                 </select>
             </td>
             {% else %}
