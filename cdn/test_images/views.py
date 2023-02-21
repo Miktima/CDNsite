@@ -30,7 +30,7 @@ def results(request):
             else:
                 new_cdn = old_cdn
             # Загружаем страницу
-            response = requests.get(page_url)
+            response = requests.get(page_url, verify=False)
             # Если страница не загрузилась, то возвращаемся к форме 
             if response.status_code != 200:
                 messages.error(request, 'Страница не загружается!')
@@ -52,7 +52,7 @@ def results(request):
             bad_list = []
             for l in newcdn_links_list:
                 # загружаем ссылку
-                response_image = requests.get(l)
+                response_image = requests.get(l, verify=False)
                 # Получаем статус
                 status = response_image.status_code
                 time.sleep(0.3)
