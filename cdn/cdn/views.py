@@ -6,7 +6,8 @@ def index(request):
         "traffic_metric/": "Получение метрик трафика через API",
         "test_images/": "Проверка загрузки изображений через CDN",
         "test_cash/": "Проверка кеширования контента в CDN",
-        "log_analize/": "Анализ лог файла CDN" 
+        "log_analize/": "Анализ лог файла CDN",
+        "dnsheader": "Сведения о DNS домена и HTTP заголовках" 
     }
     context = {
         "applications": applications

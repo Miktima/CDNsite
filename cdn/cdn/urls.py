@@ -23,6 +23,7 @@ urlpatterns = [
     path('test_images/', include('test_images.urls')),
     path('test_cash/', include('test_cash.urls')),
     path('log_analize/', include('log_analize.urls')),
+    path('dnsheader/', include('dnsheader.urls')),
     path('', views.index, name='main'),
     path('admin/', admin.site.urls),
 ]

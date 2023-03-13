@@ -1,0 +1,12 @@
+{% extends "cdn/base_results.html" %}
+{% block description_contetnt %}Проверка загрузки изображений через CDN{% endblock %}
+{% block title %}Загрузка изображений через CDN{% endblock %}
+{% block h1 %}Проверка загрузки изображений через CDN{% endblock %}
+{% block subheader %}
+    <h2>{{domain}}</h2>
+{% endblock %}
+{% block content %}
+<div>{{data_domain}}</div>
+<div>{{dtata_cdn}}</div>
+{% endblock %}
+{% block back_url %}{% url 'dns_index' %}{% endblock %}

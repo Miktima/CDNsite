@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'test_images.apps.TestImagesConfig',
     'test_cash.apps.TestCashConfig',
     'log_analize.apps.LogAnalizeConfig',
+    'dnsheader.apps.DnsheaderConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -23,7 +23,7 @@ def results(request):
                 form = CashForm()
                 return render(request, "test_cash/index.html", {'form': form})
             # Загружаем тестируемую страницу и проверяем, что она загрузилась
-            response = requests.get(page_url)
+            response = requests.get(page_url, verify=False)
             if response.status_code != 200:
                 messages.error(request, 'Страница не может быть загружена!')
                 form = CashForm()
