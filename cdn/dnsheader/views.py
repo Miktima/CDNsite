@@ -20,13 +20,21 @@ def results(request):
             result_domain = []
             result_http = []
             # Получаем результаты для домена с img. и без .img
-            response = requests.get("https://" + domain, verify=False)
-            result_http.append({
-                "url": "https://" + domain,
-                "status_code": response.status_code,
-                "history": response.history,
-                "headers": response.headers
-            })
+            try:
+                response = requests.get("https://" + domain, verify=False)            
+                result_http.append({
+                    "query": True,
+                    "url": "https://" + domain,
+                    "status_code": response.status_code,
+                    "history": response.history,
+                    "headers": response.headers
+                })
+            except requests.ConnectionError:
+                result_http.append({
+                    "query": False,
+                    "url": "https://" + domain,
+                    "error": "A Connection error occurred",
+                })
             try:
                 result_domain.append({
                     "query": True,
@@ -38,16 +46,26 @@ def results(request):
                     "qname": domain,
                     "error": "NXDOMAIN: The DNS query name does not exist"
                 })
+            # И для второго домена
             if re.search("^img.*", domain):
                 domain = domain.replace("img.", "")
             else:
                 domain = "img." + domain
-            result_http.append({
-                "url": "https://" + domain,
-                "status_code": response.status_code,
-                "history": response.history,
-                "headers": response.headers
-            })
+            try:
+                response = requests.get("https://" + domain, verify=False)            
+                result_http.append({
+                    "query": True,
+                    "url": "https://" + domain,
+                    "status_code": response.status_code,
+                    "history": response.history,
+                    "headers": response.headers
+                })
+            except requests.ConnectionError:
+                result_http.append({
+                    "query": False,
+                    "url": "https://" + domain,
+                    "error": "A Connection error occurred",
+                })
             try:
                 result_domain.append({
                     "query": True,
@@ -61,6 +79,7 @@ def results(request):
                 })                
             # Если в списке cdn нет запятой, то указан один адрес. Если есть, то несколько
             result_cdn = []
+            result_http_cdn = []
             if cdn.find(",") >0:
                 cdn_list = cdn.split(",")
                 for c in cdn_list:
@@ -75,7 +94,37 @@ def results(request):
                             "qname": c.strip(),
                             "error": "NXDOMAIN: The DNS query name does not exist"
                         })                
+                    try:
+                        response = requests.get("https://" + c.strip(), verify=False)            
+                        result_http_cdn.append({
+                            "query": True,
+                            "url": "https://" + c.strip(),
+                            "status_code": response.status_code,
+                            "history": response.history,
+                            "headers": response.headers
+                        })
+                    except requests.ConnectionError:
+                        result_http_cdn.append({
+                            "query": False,
+                            "url": "https://" + c,
+                            "error": "A Connection error occurred",
+                        })
             else:
+                try:
+                    response = requests.get("https://" + cdn, verify=False)            
+                    result_http_cdn.append({
+                        "query": True,
+                        "url": "https://" + cdn,
+                        "status_code": response.status_code,
+                        "history": response.history,
+                        "headers": response.headers
+                    })
+                except requests.ConnectionError:
+                    result_http_cdn.append({
+                        "query": False,
+                        "url": "https://" + cdn,
+                        "error": "A Connection error occurred",
+                    })
                 try:
                     result_cdn.append({
                         "query": True,
@@ -93,6 +142,7 @@ def results(request):
                 "result_domain": result_domain,
                 "result_cdn": result_cdn,
                 "result_http": result_http,
+                "result_http_cdn": result_http_cdn,
             }
             return render(request, 'dnsheader/results.html', context)
     # if a GET (or any other method) we'll create a blank form
