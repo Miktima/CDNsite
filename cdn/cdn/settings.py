@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-&*)%_^7i91r60(1jpibafl&mhfu0xu0_4ot80vg4_n@d29$2=t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['rhel7-devel3.rian.off', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['http://rhel7-devel3.rian.off:4321']
 
 # Application definition
 

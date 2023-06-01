@@ -4,6 +4,7 @@ import pandas as pd
 from io import BytesIO
 import base64
 from django.contrib import messages
+from zipfile import ZipFile
 
 import matplotlib
 matplotlib.use('Agg')
@@ -20,7 +21,13 @@ def results(request):
         form = LogForm(request.POST, request.FILES)
         if form.is_valid():
             filename = (request.FILES['file']).name
-            log_table = pd.read_csv(request.FILES['file'], ";")
+            ext_file = filename[(filename.rfind(".")+1):len(filename)]
+            if ext_file == "csv":
+                log_table = pd.read_csv(request.FILES['file'], sep=";")
+            elif ext_file == "zip":
+                archive = ZipFile(request.FILES['file'], 'r')
+                filename_csv = (request.FILES['file'].name).replace(".zip", ".csv")
+                log_table = pd.read_csv(archive.extract(filename_csv), sep=";")
             x=[]
             xticks = []
             for i in range(1,21):

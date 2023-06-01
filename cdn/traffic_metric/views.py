@@ -67,7 +67,7 @@ def results(request):
             messages.error(request, objTraffic.error)
             return HttpResponseRedirect(reverse('metric_index'))
         # Заводим полученный результат в массив pandas 
-        result_frame = pd.read_json(json.dumps(result), "records")
+        result_frame = pd.read_json(json.dumps(result), orient="records")
         # Определение тиков для оси ординат (дат)
         locator = mdates.AutoDateLocator(minticks=5, maxticks=9)
         formatter = mdates.ConciseDateFormatter(locator)
