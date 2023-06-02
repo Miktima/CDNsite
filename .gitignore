@@ -5,3 +5,7 @@ cdn/test_cash/__pycache__/
 cdn/test_images/__pycache__/
 cdn/traffic_metric/__pycache__/
 cdn/dnsheader/__pycache__/
+.gitsecret/keys/random_seed
+!*.secret
+cdn/cdn/settings.py
+cdn/db.sqlite3
