@@ -7,7 +7,8 @@ def index(request):
         "test_images/": "Проверка загрузки изображений через CDN",
         "test_cash/": "Проверка кеширования контента в CDN",
         "log_analize/": "Анализ лог файла CDN",
-        "dnsheader": "Сведения о DNS домена и HTTP заголовках" 
+        "dnsheader/": "Сведения о DNS домена и HTTP заголовках",
+        "clear_cache/": "Очистка кеша в CDN" 
     }
     context = {
         "applications": applications
