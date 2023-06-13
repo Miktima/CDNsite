@@ -1,0 +1,11 @@
+{% extends "cdn/base_results.html" %}
+{% block description_contetnt %}Очистка кеша CDN{% endblock %}
+{% block title %}Очистка кеша CDN{% endblock %}
+{% block h1 %}Очистка кеша CDN{% endblock %}
+{% block subheader %}
+    <h2>Project: {{portal}}</h2>
+{% endblock %}
+{% block content %}
+<p>{{response}}</p>
+{% endblock %}
+{% block back_url %}{% url 'clearcache_index' %}{% endblock %}

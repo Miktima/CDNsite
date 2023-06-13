@@ -24,6 +24,7 @@ urlpatterns = [
     path('test_cash/', include('test_cash.urls')),
     path('log_analize/', include('log_analize.urls')),
     path('dnsheader/', include('dnsheader.urls')),
+    path('clear_cache/', include('clear_cache.urls')),
     path('', views.index, name='main'),
     path('admin/', admin.site.urls),
 ]

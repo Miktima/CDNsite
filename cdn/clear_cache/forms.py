@@ -1,5 +1,10 @@
 from django import forms
+from stat_cdnnow.models import Portals_stat
 
-class CashForm(forms.Form):
-    page_url = forms.URLField(label='Page URL', max_length=255)
-    cdn = forms.CharField(label='CDN on the page', max_length=200)
+class ClearCacheForm(forms.Form):
+    choices_list = [('all', 'All projects')]
+    for p in Portals_stat.objects.order_by('portal').all():
+        choices_list.append((p.pk, p.portal))
+    choices = tuple(choices_list)
+    project = forms.ChoiceField(label='Select project', choices=choices)
+    masks = forms.CharField(label='Masks', max_length=200, required=False)
