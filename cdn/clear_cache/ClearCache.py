@@ -38,20 +38,11 @@ class ClearCache:
     def clear_cache(self, token, masks:list):
         # запрос на очистку кеша
         url = (self.cdnnow_url_request).replace("##portal##", self.id_portal)
-        # print ("url: ", url)
-        # print ("token: ", token)
-        # print ("masks:")
-        # if len(masks) == 0:
-        #     print("       no elements")
-        # else:
-        #     for m in masks:
-        #         print("         ",m)
-        # response = requests.post(url, data={'token': token, 'masks[]': ['/css/*']})
         if len(masks) == 0:
             response = requests.post(url, data = {'token': token})
         else:
             response = requests.post(url, data={'token': token, 'masks[]': masks})
-        print ("response: ", response.text)
+        # print ("response: ", response.text)
         if (response.json())["status"] == "ok":
             return True
         else:

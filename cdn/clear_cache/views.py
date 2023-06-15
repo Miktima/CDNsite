@@ -4,8 +4,6 @@ from .forms import ClearCacheForm
 from .ClearCache import ClearCache
 from django.contrib import messages
 from stat_cdnnow.models import Portals_stat
-import time
-
 
 def index(request):
     form = ClearCacheForm()
@@ -78,13 +76,29 @@ def results(request):
 
 def all_clear(request, portal_id):
     if request.method == 'GET':
-        test_list = [38]
-        if int(portal_id) in test_list:
-            response = {
-                "status": "true"
-            }
+        portal_ins = Portals_stat.objects.get(pk=portal_id)
+        portal = portal_ins.portal
+        masks_field = request.COOKIES['masks']
+        # формируем лист масок
+        masks = []
+        if len(masks_field) > 0:
+            masks = masks_field.split(",")
+        # Очищаем от пробелов
+        for i in range(len(masks)):
+            masks[i] = (masks[i]).strip()
+        # При инициализации класса создаются переменные для запроса, включая идентификатор домена в CDN
+        # Если идентификатор не найден, возвращаем false
+        if ClearCache(portal) != False:
+            objClearCache = ClearCache(portal)
         else:
-            response = {
-                "status": "false"
-            }
+            status = 'false'
+        token = objClearCache.get_token()
+        # Очищаем кеш по маске
+        if objClearCache.clear_cache(token, masks):
+            status = 'true'
+        else:
+            status = 'false'
+        response = {
+            "status": status
+        }
     return JsonResponse(response)

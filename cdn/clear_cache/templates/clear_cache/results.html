@@ -40,9 +40,9 @@
 <input type="hidden" name="masks_field" id="masks" value="{{masks_field}}">
 <script type="text/javascript">
     $(document).ready(function() {
+        document.cookie = 'masks=' + $("#masks").val();
         var portals = ($("#p_indexes").val()).split(",");
-        for (var i = 0; i < portals.length; i++){
-            (function (index) {$.ajax({
+        $.each(portals, function (index) {$.ajax({
                 type:'GET',
                 url:'all_clear/' + portals[index],
                 success:function(response){
@@ -56,9 +56,8 @@
                 error: function(xhr, errmsg, err) {
                     alert("Status " + "(" + portals[index] + "): " + xhr.status + "  ERROR:" + xhr.error + " " + errmsg + " " + err); 
                 },
-            });})(i);
-        }
-    })
+            });});
+        })
 </script>
 {% endif %}
 {% endblock %}
