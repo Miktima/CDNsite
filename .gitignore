@@ -10,3 +10,5 @@ cdn/dnsheader/__pycache__/
 cdn/cdn/settings.py
 cdn/db.sqlite3
 cdn/clear_cache/__pycache__/
+cdn/cdn/secret_key.txt
+cdn/static_files/
