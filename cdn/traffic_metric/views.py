@@ -18,7 +18,7 @@ import matplotlib.dates as mdates
 
 def index(request):
     # Заполняем список проектов (порталов), для работы с API использется имя портала
-    project_list = Portals_stat.objects.all()
+    project_list = Portals_stat.objects.order_by("portal").all()
     # Заполняем списки для дат
     years = [2021, 2022, 2023]
     months = []

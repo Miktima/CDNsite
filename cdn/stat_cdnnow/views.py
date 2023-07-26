@@ -16,7 +16,7 @@ from matplotlib import pyplot as plt
 
 def index(request):
     # Выбираем список порталов
-    portal_list = Portals_stat.objects.all()
+    portal_list = Portals_stat.objects.order_by("portal").all()
     # Заполняем списки для выбора даты
     years = [2021, 2022, 2023]
     months = []
